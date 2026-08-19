@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+:root {
+  /* Creamy Delight Palette (coolors.co/palette/e8d1c5-eddcd2-fff1e6-f0efeb-eeddd3-edede8) */
+  --color-blush-cream: #E8D1C5;
+  --color-creamy-almond: #EDDCD2;
+  --color-warm-ivory: #FFF1E6;
+  --color-pearl-cream: #F0EFEB;
+  --color-dusty-rose-cream: #EEDDD3;
+  --color-pale-parchment: #EDEDE8;
+
+  /* Refined Soft Feminine Slick Accent Variables */
+  --bg: #F0EFEB;
+  --card-bg: #FFFDFB;
+  --accent-terracotta: #D48B77;
+  --accent-blush: #E88E75;
+  --accent-matcha: #6B9080;
+  --accent-rose: #E8D1C5;
+  --ink: #3D312A;
+  --ink-light: #7C6E66;
+}
+
+body {
+  background-color: var(--bg);
+  background-image: radial-gradient(circle at 15% 15%, rgba(232, 209, 197, 0.45) 0%, transparent 40%),
+                    radial-gradient(circle at 85% 85%, rgba(255, 241, 230, 0.6) 0%, transparent 45%),
+                    radial-gradient(circle at 50% 50%, rgba(238, 221, 211, 0.3) 0%, transparent 60%);
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: 'Plus Jakarta Sans', 'M PLUS Rounded 1c', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Font Family Helper for Cherry Bomb One */
+.font-cherry-bomb {
+  font-family: 'Cherry Bomb One', cursive, sans-serif !important;
+}
+
+/* Soft Feminine Slick Bento Card Styling */
+.bento-card {
+  background: var(--card-bg);
+  border-radius: 26px;
+  padding: 22px;
+  border: 1px solid rgba(238, 221, 211, 0.85);
+  box-shadow: 0 4px 14px -2px rgba(61, 49, 42, 0.04), 0 2px 6px -1px rgba(232, 209, 197, 0.15);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bento-card:hover {
+  transform: translateY(-1px);
+  border-color: #E8D1C5;
+  box-shadow: 0 10px 22px -4px rgba(61, 49, 42, 0.07), 0 4px 10px -2px rgba(232, 209, 197, 0.25);
+}
+
+.bento-ai-gradient {
+  background: linear-gradient(135deg, #FFF1E6 0%, #EDDCD2 55%, #E8D1C5 100%);
+}
+
+.bento-chip {
+  background: #EEDDD3;
+  color: #5C3A2E;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border: 1px solid rgba(232, 209, 197, 0.7);
+}
+
+.bento-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-light);
+}
+
+/* Soft Pill Buttons */
+.bento-btn-primary {
+  background-color: #3D312A;
+  color: #FFF1E6;
+  border-radius: 16px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.bento-btn-primary:hover {
+  background-color: #2E2420;
+  box-shadow: 0 4px 12px rgba(61, 49, 42, 0.2);
+}
+
+.bento-btn-accent {
+  background: linear-gradient(135deg, #E88E75 0%, #D48B77 100%);
+  color: #FFFFFF;
+  border-radius: 16px;
+  font-weight: 700;
+  box-shadow: 0 4px 10px rgba(212, 139, 119, 0.25);
+  transition: all 0.2s ease;
+}
+
+.bento-btn-accent:hover {
+  background: linear-gradient(135deg, #EB9881 0%, #DE927F 100%);
+  box-shadow: 0 6px 14px rgba(212, 139, 119, 0.35);
+}
+
+/* Hide scrollbar for clean tab bars */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

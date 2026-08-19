@@ -1,0 +1,6 @@
+{
+  "name": "げんにょなう (GennyoNaw)",
+  "description": "Soft feminine slick AI diet & fitness tracker with Redmi Watch biometrics sync, personalized meal protocols, and daily calorie and hydration tracking in Creamy Delight aesthetic.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
