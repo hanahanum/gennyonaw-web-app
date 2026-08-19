@@ -92,25 +92,26 @@ export const GoalProgressCard: React.FC<GoalProgressCardProps> = ({
   return (
     <div
       id="goal-progress-bento-card"
-      className="bento-card bg-[#FFFDFB] border border-[#EEDDD3] shadow-xs relative overflow-hidden transition-all"
+      className="bento-card bg-[#FFFDFB] border border-[#EEDDD3] shadow-xs relative overflow-hidden flex flex-col h-[380px] sm:h-[350px] p-4 sm:p-5 transition-all"
     >
       {/* Decorative top soft pastel accent bar */}
       <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#E88E75] via-[#EEDDD3] to-[#D48B77]" />
 
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-[#EEDDD3]/70">
-        <div className="flex items-center gap-2.5">
-          <div className="w-10 h-10 rounded-2xl bg-[#3D312A] text-[#FFF1E6] flex items-center justify-center shadow-xs shrink-0">
-            <Target className="w-5 h-5 text-[#E88E75]" />
+      {/* Pinned Card Header */}
+      <div className="shrink-0 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 pb-2.5 border-b border-[#EEDDD3]/70">
+        <div className="flex items-start sm:items-center gap-2.5 min-w-0">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-[#3D312A] text-[#FFF1E6] flex items-center justify-center shadow-xs shrink-0 mt-0.5 sm:mt-0">
+            <Target className="w-4 h-4 sm:w-5 sm:h-5 text-[#E88E75]" />
           </div>
-          <div>
-            <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="font-bold text-[#3D312A] text-base tracking-tight">
+          <div className="min-w-0 space-y-0.5">
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+              <h3 className="font-bold text-[#3D312A] text-sm sm:text-base tracking-tight whitespace-nowrap">
                 Target Weight & Goal Timeline
               </h3>
-              <span className="bento-chip text-[10px] bg-[#FFF1E6] text-[#5C3A2E] border border-[#EEDDD3]">
+              <span className="bento-chip text-[10px] bg-[#FFF1E6] text-[#5C3A2E] border border-[#EEDDD3] whitespace-nowrap">
                 {projection.paceDescription}
               </span>
-              <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold border ${
+              <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold border whitespace-nowrap ${
                 projection.bmi.isTargetHealthy
                   ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
                   : 'bg-amber-50 text-amber-800 border-amber-200'
@@ -118,7 +119,7 @@ export const GoalProgressCard: React.FC<GoalProgressCardProps> = ({
                 Target BMI: {projection.bmi.targetBmi} ({projection.bmi.targetCategory})
               </span>
             </div>
-            <p className="text-[11px] text-[#7C6E66]">
+            <p className="text-[11px] text-[#7C6E66] leading-tight line-clamp-1">
               Real-time projection based on BMI rules, your Diet Plan & Redmi Watch burn
             </p>
           </div>
@@ -128,16 +129,18 @@ export const GoalProgressCard: React.FC<GoalProgressCardProps> = ({
           type="button"
           id="btn-edit-target-kg"
           onClick={() => setIsEditingGoal(!isEditingGoal)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-[#FFF1E6] text-[#3D312A] border border-[#EEDDD3] hover:bg-[#EDDCD2]/70 transition shadow-xs"
+          className="self-start sm:self-auto flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-[#FFF1E6] text-[#3D312A] border border-[#EEDDD3] hover:bg-[#EDDCD2]/70 transition shadow-xs shrink-0"
         >
           <SlidersHorizontal className="w-3.5 h-3.5 text-[#D48B77]" />
           <span>{isEditingGoal ? 'Close Form' : 'Edit Target & Height'}</span>
         </button>
       </div>
 
-      {/* Inline Goal & BMI Editor */}
-      {isEditingGoal && (
-        <form onSubmit={handleSaveWeights} className="my-3 p-4 rounded-3xl bg-[#FFF1E6]/90 border border-[#EEDDD3] space-y-3.5 animate-in fade-in duration-200">
+      {/* Smooth Scrollable Body Container with fixed bounds */}
+      <div className="flex-1 overflow-y-auto bento-scrollbar pr-1.5 space-y-3 pt-2.5">
+        {/* Inline Goal & BMI Editor */}
+        {isEditingGoal && (
+          <form onSubmit={handleSaveWeights} className="p-4 rounded-3xl bg-[#FFF1E6]/90 border border-[#EEDDD3] space-y-3.5 animate-in fade-in duration-200">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-[#3D312A] flex items-center gap-1.5">
               <Scale className="w-4 h-4 text-[#D48B77]" />
@@ -260,14 +263,14 @@ export const GoalProgressCard: React.FC<GoalProgressCardProps> = ({
       )}
 
       {/* Main Goal Stats Bar */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 my-1">
         {/* Current Weight & BMI */}
-        <div className="p-3 rounded-2xl bg-[#F0EFEB]/80 border border-[#EEDDD3]/60 flex flex-col justify-between">
+        <div className="p-2.5 sm:p-3 rounded-2xl bg-[#F0EFEB]/80 border border-[#EEDDD3]/60 flex flex-col justify-between">
           <span className="text-[10px] font-bold uppercase tracking-wider text-[#7C6E66]">
             Current Weight
           </span>
-          <div className="flex items-baseline gap-1 my-1">
-            <span className="text-2xl sm:text-3xl font-extrabold font-mono text-[#3D312A]">
+          <div className="flex items-baseline gap-1 my-0.5">
+            <span className="text-xl sm:text-2xl font-extrabold font-mono text-[#3D312A]">
               {currentWeight}
             </span>
             <span className="text-xs font-semibold text-[#7C6E66]">kg</span>
@@ -278,12 +281,12 @@ export const GoalProgressCard: React.FC<GoalProgressCardProps> = ({
         </div>
 
         {/* Target Weight Goal & BMI */}
-        <div className="p-3 rounded-2xl bg-[#FFF1E6] border border-[#EEDDD3] flex flex-col justify-between">
+        <div className="p-2.5 sm:p-3 rounded-2xl bg-[#FFF1E6] border border-[#EEDDD3] flex flex-col justify-between">
           <span className="text-[10px] font-bold uppercase tracking-wider text-[#5C3A2E]">
             Target Kilogram Goal
           </span>
-          <div className="flex items-baseline gap-1 my-1">
-            <span className="text-2xl sm:text-3xl font-extrabold font-mono text-[#D48B77]">
+          <div className="flex items-baseline gap-1 my-0.5">
+            <span className="text-xl sm:text-2xl font-extrabold font-mono text-[#D48B77]">
               {targetWeight}
             </span>
             <span className="text-xs font-bold text-[#D48B77]">kg</span>
@@ -295,29 +298,29 @@ export const GoalProgressCard: React.FC<GoalProgressCardProps> = ({
         </div>
 
         {/* Estimated Time to Goal */}
-        <div className="p-3 rounded-2xl bg-[#F0EFEB]/80 border border-[#EEDDD3]/60 flex flex-col justify-between">
+        <div className="p-2.5 sm:p-3 rounded-2xl bg-[#F0EFEB]/80 border border-[#EEDDD3]/60 flex flex-col justify-between">
           <span className="text-[10px] font-bold uppercase tracking-wider text-[#7C6E66]">
             Estimated Time
           </span>
-          <div className="flex items-baseline gap-1 my-1">
-            <span className="text-2xl sm:text-3xl font-extrabold font-mono text-[#3D312A]">
+          <div className="flex items-baseline gap-1 my-0.5">
+            <span className="text-xl sm:text-2xl font-extrabold font-mono text-[#3D312A]">
               ~{projection.estimatedWeeks}
             </span>
             <span className="text-xs font-semibold text-[#7C6E66]">weeks</span>
           </div>
-          <div className="flex items-center gap-1 text-[10px] font-bold text-[#6B9080]">
-            <Calendar className="w-3 h-3" />
-            <span>Target: {projection.estimatedCompletionDate}</span>
+          <div className="flex items-center gap-1 text-[10px] font-bold text-[#6B9080] truncate">
+            <Calendar className="w-3 h-3 shrink-0" />
+            <span className="truncate">Target: {projection.estimatedCompletionDate}</span>
           </div>
         </div>
 
         {/* Weekly Projected Rate */}
-        <div className="p-3 rounded-2xl bg-[#F0EFEB]/80 border border-[#EEDDD3]/60 flex flex-col justify-between">
+        <div className="p-2.5 sm:p-3 rounded-2xl bg-[#F0EFEB]/80 border border-[#EEDDD3]/60 flex flex-col justify-between">
           <span className="text-[10px] font-bold uppercase tracking-wider text-[#7C6E66]">
             Weekly Fat/Burn Rate
           </span>
-          <div className="flex items-baseline gap-1 my-1">
-            <span className="text-2xl sm:text-3xl font-extrabold font-mono text-[#3D312A]">
+          <div className="flex items-baseline gap-1 my-0.5">
+            <span className="text-xl sm:text-2xl font-extrabold font-mono text-[#3D312A]">
               {isLoss ? `-${projection.weeklyRateKg}` : `+${projection.weeklyRateKg}`}
             </span>
             <span className="text-xs font-semibold text-[#7C6E66]">kg/wk</span>
@@ -397,5 +400,6 @@ export const GoalProgressCard: React.FC<GoalProgressCardProps> = ({
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 };

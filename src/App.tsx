@@ -9,6 +9,7 @@ import { BreathingPacerModal } from './components/BreathingPacerModal';
 import { AICoachModal } from './components/AICoachModal';
 import { PersonalInstructionsModal } from './components/PersonalInstructionsModal';
 import { AIStatePlannerModal } from './components/AIStatePlannerModal';
+import { HealthConnectFetchModal } from './components/HealthConnectFetchModal';
 import { MobileBottomNav } from './components/MobileBottomNav';
 import { CheckCircle2, Sparkles, X } from 'lucide-react';
 import {
@@ -40,6 +41,7 @@ export function App() {
   const [isAICoachOpen, setIsAICoachOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isStatePlannerOpen, setIsStatePlannerOpen] = useState(false);
+  const [isHealthConnectModalOpen, setIsHealthConnectModalOpen] = useState(false);
 
   // Status Notification Toast
   const [notification, setNotification] = useState<{ message: string; sub?: string } | null>(null);
@@ -522,13 +524,14 @@ export function App() {
         onOpenSettings={() => setIsSettingsOpen(true)}
         onOpenAICoach={() => setIsAICoachOpen(true)}
         onOpenStatePlanner={() => setIsStatePlannerOpen(true)}
+        onOpenHealthConnect={() => setIsHealthConnectModalOpen(true)}
         isWatchConnected={true}
-        watchModel={preferences.watchModel}
+        watchModel={preferences.watchModel || 'Redmi Watch 5 Active'}
         currentStressScore={biometrics.stressScore || 32}
       />
 
       {/* Main Responsive View Container */}
-      <main className="flex-1 w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-5 pb-28 sm:pb-10">
         {activeTab === 'overview' && (
           <DashboardOverview
             dietPlan={dietPlan}
@@ -569,6 +572,7 @@ export function App() {
             onQuickSync={handleQuickWatchSync}
             isSyncing={isSyncingWatch}
             onOpenBreathing={() => setIsBreathingOpen(true)}
+            onOpenHealthConnectModal={() => setIsHealthConnectModalOpen(true)}
           />
         )}
 
@@ -645,6 +649,14 @@ export function App() {
         onSave={handleSavePreferences}
         onTriggerGenerate={handleTriggerAIWithNewPrefs}
         isGenerating={isGeneratingDiet || isGeneratingWorkouts}
+      />
+
+      <HealthConnectFetchModal
+        isOpen={isHealthConnectModalOpen}
+        onClose={() => setIsHealthConnectModalOpen(false)}
+        preferences={preferences}
+        onApplyBiometrics={setBiometrics}
+        showNotification={(msg) => setNotification({ message: msg })}
       />
     </div>
   );

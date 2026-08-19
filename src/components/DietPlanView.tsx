@@ -196,7 +196,7 @@ export const DietPlanView: React.FC<DietPlanViewProps> = ({
         </button>
 
         {isExpanded && (
-          <div className="pt-2 space-y-3 text-xs bg-[#FFF1E6]/70 p-3 rounded-2xl border border-[#EEDDD3]">
+          <div className="pt-2 space-y-3 text-xs bg-[#FFF1E6]/70 p-3 rounded-2xl border border-[#EEDDD3] max-h-48 overflow-y-auto bento-scrollbar pr-1">
             <div>
               <span className="font-bold text-[#3D312A] block mb-1">Ingredients:</span>
               <ul className="list-disc list-inside space-y-0.5 text-[#7C6E66]">

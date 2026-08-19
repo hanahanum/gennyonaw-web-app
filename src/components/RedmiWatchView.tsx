@@ -9,6 +9,12 @@ import {
   RefreshCw,
   Upload,
   CheckCircle2,
+  HelpCircle,
+  Smartphone,
+  Share2,
+  ArrowRight,
+  X,
+  Radio,
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -31,6 +37,7 @@ interface RedmiWatchViewProps {
   onQuickSync: () => void;
   isSyncing: boolean;
   onOpenBreathing: () => void;
+  onOpenHealthConnectModal?: () => void;
 }
 
 export const RedmiWatchView: React.FC<RedmiWatchViewProps> = ({
@@ -40,9 +47,11 @@ export const RedmiWatchView: React.FC<RedmiWatchViewProps> = ({
   onQuickSync,
   isSyncing,
   onOpenBreathing,
+  onOpenHealthConnectModal,
 }) => {
   const [selectedMetric, setSelectedMetric] = useState<'heart_rate' | 'stress' | 'steps'>('heart_rate');
   const [uploadStatus, setUploadStatus] = useState<string | null>(null);
+  const [showGuideModal, setShowGuideModal] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const readings = biometrics.hourlyReadings || [];
@@ -90,7 +99,7 @@ export const RedmiWatchView: React.FC<RedmiWatchViewProps> = ({
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-xl sm:text-2xl font-extrabold text-[#3D312A]">
-                {preferences.watchModel}
+                {preferences.watchModel || 'Redmi Watch 5 Active'}
               </h1>
               <span className="bento-chip bg-[#FFF1E6] text-[#5C3A2E] border border-[#EEDDD3]">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#6B9080] animate-pulse inline-block mr-1" />
@@ -98,12 +107,30 @@ export const RedmiWatchView: React.FC<RedmiWatchViewProps> = ({
               </span>
             </div>
             <p className="text-xs text-[#7C6E66] mt-0.5">
-              Xiaomi HyperOS Telemetry • Real-time Heart Rate & Stress Streaming
+              Xiaomi HyperOS Telemetry • Health Connect & Mi Fitness Integration
             </p>
           </div>
         </div>
 
         <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+          {onOpenHealthConnectModal && (
+            <button
+              onClick={onOpenHealthConnectModal}
+              className="px-3.5 py-2.5 rounded-2xl bg-[#D48B77] hover:bg-[#C27965] text-white text-xs font-bold shadow-xs transition flex items-center justify-center gap-1.5"
+            >
+              <Smartphone className="w-3.5 h-3.5 text-white" />
+              <span>Fetch API</span>
+            </button>
+          )}
+
+          <button
+            onClick={() => setShowGuideModal(true)}
+            className="px-3.5 py-2.5 rounded-2xl bg-[#FFF1E6] hover:bg-[#EDDCD2] text-[#5C3A2E] text-xs font-bold border border-[#EEDDD3] shadow-xs transition flex items-center justify-center gap-1.5"
+          >
+            <HelpCircle className="w-3.5 h-3.5 text-[#D48B77]" />
+            <span>Health Connect Guide</span>
+          </button>
+
           <button
             onClick={onQuickSync}
             disabled={isSyncing}
@@ -130,6 +157,102 @@ export const RedmiWatchView: React.FC<RedmiWatchViewProps> = ({
           </button>
         </div>
       </div>
+
+      {uploadStatus && (
+        <div className="p-3 rounded-2xl bg-[#FFF1E6] border border-[#6B9080] text-xs text-[#5C3A2E] flex items-center gap-2 animate-in fade-in">
+          <CheckCircle2 className="w-4 h-4 text-[#6B9080]" />
+          <span>{uploadStatus}</span>
+        </div>
+      )}
+
+      {/* Health Connect Setup Modal */}
+      {showGuideModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#3D312A]/60 backdrop-blur-xs overflow-y-auto">
+          <div className="bg-[#FFFDFB] rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-[#EEDDD3] my-8 animate-in zoom-in-95 duration-200 space-y-5">
+            <div className="flex items-center justify-between pb-3 border-b border-[#EEDDD3]">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-[#FFF1E6] text-[#D48B77] border border-[#EEDDD3] flex items-center justify-center">
+                  <Smartphone className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold text-[#3D312A]">Connect Redmi Watch 5 Active</h2>
+                  <p className="text-xs text-[#7C6E66]">Step-by-step Health Connect & Mi Fitness pairing guide</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowGuideModal(false)}
+                className="p-2 rounded-xl text-[#7C6E66] hover:text-[#3D312A] hover:bg-[#FFF1E6] transition"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-3.5 text-xs text-[#3D312A]">
+              {/* Step 1 */}
+              <div className="p-3.5 rounded-2xl bg-[#FFF1E6]/70 border border-[#EEDDD3] flex items-start gap-3">
+                <div className="w-6 h-6 rounded-xl bg-[#3D312A] text-[#FFF1E6] flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
+                  1
+                </div>
+                <div className="space-y-1">
+                  <span className="font-bold text-sm text-[#3D312A] block">Pair Watch to Mi Fitness App</span>
+                  <p className="text-[#7C6E66] leading-relaxed">
+                    Make sure your <strong>Redmi Watch 5 Active</strong> is paired to the official <strong>Mi Fitness (Xiaomi Wear)</strong> app on your Android or iOS phone via Bluetooth.
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 2 */}
+              <div className="p-3.5 rounded-2xl bg-[#FFF1E6]/70 border border-[#EEDDD3] flex items-start gap-3">
+                <div className="w-6 h-6 rounded-xl bg-[#3D312A] text-[#FFF1E6] flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
+                  2
+                </div>
+                <div className="space-y-1">
+                  <span className="font-bold text-sm text-[#3D312A] block">Enable Health Connect in Mi Fitness</span>
+                  <p className="text-[#7C6E66] leading-relaxed">
+                    In the <strong>Mi Fitness</strong> app, navigate to:
+                  </p>
+                  <div className="p-2 rounded-xl bg-white border border-[#EEDDD3] font-mono text-[11px] text-[#5C3A2E]">
+                    Profile ➔ Third-party data ➔ Health Connect (or Google Fit)
+                  </div>
+                  <p className="text-[#7C6E66]">
+                    Toggle ON permissions for <strong>Heart Rate</strong>, <strong>Steps</strong>, <strong>Active Calories Burned</strong>, and <strong>Sleep/Stress</strong>.
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div className="p-3.5 rounded-2xl bg-[#FFF1E6]/70 border border-[#EEDDD3] flex items-start gap-3">
+                <div className="w-6 h-6 rounded-xl bg-[#3D312A] text-[#FFF1E6] flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
+                  3
+                </div>
+                <div className="space-y-1">
+                  <span className="font-bold text-sm text-[#3D312A] block">Sync Data to GennyoNaw Web App</span>
+                  <p className="text-[#7C6E66] leading-relaxed">
+                    You can sync your data into this web app in two easy ways:
+                  </p>
+                  <ul className="list-disc pl-4 space-y-1 text-[#7C6E66] mt-1">
+                    <li>
+                      <strong>Direct BLE Quick Sync:</strong> Click the <span className="font-bold text-[#3D312A]">"Quick Sync BLE"</span> button above to trigger an immediate live telemetry update.
+                    </li>
+                    <li>
+                      <strong>Export File:</strong> In Mi Fitness, tap <span className="font-bold text-[#3D312A]">Settings ➔ Data Management ➔ Export Data</span> (CSV or JSON) and click <span className="font-bold text-[#3D312A]">"Import File"</span> above to load your full 24h biometric history.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-2 flex justify-end">
+              <button
+                onClick={() => setShowGuideModal(false)}
+                className="px-5 py-2.5 rounded-xl bg-[#3D312A] text-[#FFF1E6] font-bold text-xs hover:bg-[#2E2420] transition"
+              >
+                Got It, Ready to Sync!
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {uploadStatus && (
         <div className="p-3 rounded-2xl bg-[#FFF1E6] border border-[#6B9080] text-xs text-[#5C3A2E] flex items-center gap-2 animate-in fade-in">

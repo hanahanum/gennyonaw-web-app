@@ -186,8 +186,8 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
               </div>
             </div>
 
-            {/* Meal Items List */}
-            <div className="mt-4 space-y-2">
+            {/* Meal Items List - Scrollable with fixed card size */}
+            <div className="mt-4 space-y-2 max-h-48 sm:max-h-56 overflow-y-auto bento-scrollbar pr-1">
               {/* Breakfast */}
               <div className="flex items-center gap-3 p-2.5 rounded-2xl bg-white/85 backdrop-blur-xs border border-[#EEDDD3]/70 hover:bg-white transition">
                 <div className="w-8 h-8 rounded-xl bg-[#E88E75] text-white font-bold flex items-center justify-center text-xs shrink-0 shadow-xs">
@@ -343,9 +343,9 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
               {todayWorkout.focusArea}
             </h3>
 
-            {/* Checklist items */}
-            <div className="space-y-1.5">
-              {todayWorkout.exercises.slice(0, 3).map((ex, idx) => {
+            {/* Checklist items - Scrollable with fixed card bounds */}
+            <div className="space-y-1.5 max-h-36 sm:max-h-44 overflow-y-auto bento-scrollbar pr-1">
+              {todayWorkout.exercises.map((ex, idx) => {
                 const isDone = !!completedExercises[ex.id];
                 return (
                   <div

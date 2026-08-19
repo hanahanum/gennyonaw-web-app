@@ -184,6 +184,11 @@ export interface DailyBiometricSummary {
   sleepHours: number;
   sleepQuality: 'poor' | 'fair' | 'good' | 'optimal';
   hourlyReadings: BiometricReading[];
+  stepCount?: number;
+  averageHeartRateBpm?: number;
+  restingHeartRateBpm?: number;
+  stressScore?: number;
+  stressLevel?: 'relaxed' | 'mild' | 'moderate' | 'high';
 }
 
 export interface FoodLogEntry {
@@ -214,6 +219,31 @@ export interface DailyTrackingState {
   totalCarbsG: number;
   totalFatG: number;
   totalWaterMl: number;
+}
+
+export interface HealthConnectSyncPayload {
+  source: string;
+  deviceModel: string;
+  lastSyncTimestamp: string;
+  stepCount: number;
+  activeCaloriesBurned: number;
+  averageHeartRateBpm: number;
+  restingHeartRateBpm: number;
+  stressScore: number;
+  stressLevel: 'relaxed' | 'mild' | 'moderate' | 'high';
+  sleepHours: number;
+  sleepQuality: 'poor' | 'fair' | 'good' | 'optimal';
+  activeMinutes: number;
+  standingHours: number;
+  readinessScore: number;
+  hourlyReadings: BiometricReading[];
+}
+
+export interface HealthConnectFetchResponse {
+  success: boolean;
+  message: string;
+  data?: HealthConnectSyncPayload;
+  dataSource: 'google_health_connect' | 'xiaomi_mi_fitness' | 'web_bluetooth' | 'cloud_bridge';
 }
 
 export interface AICoachInsight {

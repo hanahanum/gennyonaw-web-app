@@ -112,3 +112,28 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Custom Soft Bento Scrollbar */
+.bento-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #D48B77 rgba(255, 241, 230, 0.5);
+}
+
+.bento-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.bento-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 241, 230, 0.5);
+  border-radius: 9999px;
+}
+
+.bento-scrollbar::-webkit-scrollbar-thumb {
+  background: #D48B77;
+  border-radius: 9999px;
+}
+
+.bento-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #C47C68;
+}
